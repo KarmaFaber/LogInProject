@@ -5,6 +5,7 @@ from pymysql import *
 
 #my modules:---
 from class_sql import *
+from encrypt import encrypt_password_md5
 
 #root-----------------------------------------------------------
 root=Tk()
@@ -13,9 +14,9 @@ root.geometry("400x200")
 root.config(bg="#F5EEE2")
 
 #variables-------
-email=StringVar()
-#password=StringVar()
-#encrypt_pass=StringVar()
+email_box=StringVar()
+password_box=StringVar()
+
 
 #labels------------
 lblEmail=Label(root, text="your email: ", bg="#F5EEE2")
@@ -42,6 +43,7 @@ def logn_in():
      #variables
      email_box=emailBox.get()
      password_box=passBox.get()
+     encrypt=encrypt_password_md5(password_box)
      
      try: 
           
@@ -56,14 +58,17 @@ def logn_in():
                email=row[0]
                password=row[1]
                ("email={0}, password={1}".format(email, password))
-
-
-          if password_box==password:
+          
+          if encrypt==password:
                messagebox.showinfo(message="log in OK", title="Log In message :)")
                emailBox.delete(0,END)
                passBox.delete(0,END)
+
+               #close root/window after sign up:---
+               global root
+               root.quit()
           else:
-               messagebox.showinfo(message="log in not OK", title="Log In message :)")
+               messagebox.showinfo(message="log in is not OK", title="Log In message :)")
                emailBox.delete(0,END)
                passBox.delete(0,END)
 
@@ -78,9 +83,8 @@ def logn_in():
           messagebox.showwarning(message="Error connecting to the database, check your connection to the server and try again.", title="Warning")
      except InternalError:
           messagebox.showwarning(message="Check the connection data to the BD.", title="Warning")
-     except IntegrityError:
-          messagebox.showwarning(message="Duplicate entry email, use email for sign up or log in.", title="Warning")
-
+     except UnboundLocalError: 
+          messagebox.showwarning(message="email not found.", title="Warning")
 #btn---------------
 btn=Button(root, text="Log In", command=logn_in, bg="#FB7F64", fg="#3C303E")
 btn.grid(row=6, column=2, padx=20, pady=20)

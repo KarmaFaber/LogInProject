@@ -14,12 +14,19 @@ The main difference between the two versions lies in the use of graphic interfac
 
 ### Special modules
 * <b>class_sql</b>:
-<br/><i>sql</i>=database_host, server_username, server_password, database_name
+<br/><i>#sql</i>=database_host, server_username, server_password, database_name
      - insert_query(sql) -server connection
      - select_query(sql) -mysql queries
 
+* <b>encrypt</b> -password encryption:
+     - encrypt_password_shamd5(password)
+     
+
 ### Python libraries used 
-* pymysql
+* pillow
+* pymysql (vers: 0.9.3)
+* random
+* string
 * tkinter
 
 ### DataBase MySQL
@@ -32,7 +39,10 @@ This project is made for educational purposes, GitHub users are free to download
 
 ## Author
 
-* **Karma Faber** 
+* [Karma Faber](https://www.linkedin.com/in/maria-zolotarova/). 
 
 ## Versions:
 * <b>version 1.0</b> - Operational Version. Password is entered into the database without encryption and format_checker.
+* <b>version 1.2</b> - Operation Version.
+  - encrypt module - fixed
+  
